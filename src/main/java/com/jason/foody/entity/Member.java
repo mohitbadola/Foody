@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "users")
-public class User {
+@Entity(name = "members")
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -16,7 +16,7 @@ public class User {
 
     @NotBlank(message = "First name can not be empty.")
     String firstName;
-    
+
     String lastName;
 
     @NotBlank(message = "Email id can not be empty.")
