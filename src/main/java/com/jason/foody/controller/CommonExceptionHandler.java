@@ -1,5 +1,6 @@
 package com.jason.foody.controller;
 
+import com.jason.foody.exception.InvalidOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,6 +23,11 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     ResponseEntity<String> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex){
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidOperationException.class)
+    ResponseEntity<String> handleInvalidOperationException(InvalidOperationException ex){
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
