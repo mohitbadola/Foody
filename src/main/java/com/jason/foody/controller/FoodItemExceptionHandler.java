@@ -13,13 +13,6 @@ import java.util.List;
 @ControllerAdvice
 public class FoodItemExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<List<String>> handleInvalidArgumentException(MethodArgumentNotValidException ex) {
-        List<String> errors = new ArrayList<>();
-        ex.getAllErrors().forEach(error -> errors.add(error.getDefaultMessage()));
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(InvalidIdException.class)
     ResponseEntity<String> handleInvalidException(InvalidIdException ex){
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
