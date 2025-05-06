@@ -31,13 +31,13 @@ public class MemberService {
                 .orElseThrow(() -> new InvalidIdException("There is no member with id: " + id));
     }
 
-    public void updateMember(Member member) throws InvalidIdException, InvalidOperationException {
+    public Member updateMember(Member member) throws InvalidIdException, InvalidOperationException {
         Member savedMember = getMemberById(member.getId());
         if(!savedMember.getEmail().equals(member.getEmail())){
             throw new InvalidOperationException("Email id cannot be modified");
         }
-        savedMember.setModified(LocalDateTime.now());
-        memberRepository.save(member);
+        member.setModified(LocalDateTime.now());
+        return memberRepository.save(member);
     }
 
     public void removeMember(Member member) throws InvalidIdException {
