@@ -7,6 +7,7 @@ import com.jason.foody.exception.InvalidOperationException;
 import com.jason.foody.repository.MemberRepository;
 import com.jason.foody.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ public class MemberService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public UUID saveMember(Member member) throws InvalidOperationException {
         member.setCreated(LocalDateTime.now());
         List<Role> roles = new ArrayList<>();
@@ -36,6 +40,10 @@ public class MemberService {
             }
         }
         member.setRoles(roles);
+
+//        Encode the password
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         Member savedMember = memberRepository.save(member);
         return savedMember.getId();
     }
