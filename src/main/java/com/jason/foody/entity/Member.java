@@ -79,5 +79,13 @@ public class Member {
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
 

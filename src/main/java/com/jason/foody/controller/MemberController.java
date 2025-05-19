@@ -21,7 +21,7 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping("/sign-up")
-    ResponseEntity<UUID> signUp(@Valid @RequestBody Member member){
+    ResponseEntity<UUID> signUp(@Valid @RequestBody Member member) throws InvalidOperationException{
         UUID id = memberService.saveMember(member);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
