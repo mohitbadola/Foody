@@ -25,6 +25,9 @@ public class Member {
     @Column(unique = true)
     String email;
 
+    @NotBlank(message = "Password can not be empty.")
+    String password;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "member_roles",
@@ -86,6 +89,14 @@ public class Member {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 
