@@ -13,6 +13,7 @@ public class Role {
 
     private String role;
 
+    @ManyToMany(mappedBy = "roles")
     private List<Member> members;
 
     public Role() {

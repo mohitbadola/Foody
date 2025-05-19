@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "members")
@@ -23,6 +24,14 @@ public class Member {
     @Email(message = "Please provide a valid email.")
     @Column(unique = true)
     String email;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name="member_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    List<Role> roles;
 
     LocalDateTime created;
     LocalDateTime modified;
