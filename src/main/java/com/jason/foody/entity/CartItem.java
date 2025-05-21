@@ -16,11 +16,12 @@ public class CartItem {
     private Long id;
     private UUID userId;
     private UUID itemId;
-    @NotBlank(message = "Item name can not be empty.")
+
     private String itemName;
+
     @Positive(message = "Quantity should be positive.")
     private int quantity;
-    @Positive(message = "Price must be positive.")
+
     private Double price;
 
     public CartItem() {
