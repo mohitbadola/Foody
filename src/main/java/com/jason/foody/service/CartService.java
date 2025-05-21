@@ -7,8 +7,6 @@ import com.jason.foody.exception.InvalidIdException;
 import com.jason.foody.repository.CartRepository;
 import com.jason.foody.repository.FoodItemRepository;
 import com.jason.foody.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class CartService {
         this.foodItemRepository = foodItemRepository;
     }
 
-    public CartItem addCartItem(CartItem cartItem) throws InvalidIdException {
+    public CartItem addCart(CartItem cartItem) throws InvalidIdException {
         Member member = memberRepository.findById(cartItem.getUserId()).orElseThrow(
                 () -> new InvalidIdException("User not found with id: " + cartItem.getUserId() + ".")
         );
