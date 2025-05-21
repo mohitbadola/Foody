@@ -4,6 +4,7 @@ import com.jason.foody.entity.CartItem;
 import com.jason.foody.entity.FoodItem;
 import com.jason.foody.entity.Member;
 import com.jason.foody.exception.InvalidIdException;
+import com.jason.foody.exception.InvalidOperationException;
 import com.jason.foody.repository.CartRepository;
 import com.jason.foody.repository.FoodItemRepository;
 import com.jason.foody.repository.MemberRepository;
@@ -40,5 +41,18 @@ public class CartService {
 
     public List<CartItem> fetchUserCartItems(UUID userId) {
         return cartRepository.findByUserId(userId);
+    }
+
+    public CartItem removeCartItem(Long cartItemId, UUID userId) throws InvalidIdException, InvalidOperationException {
+        CartItem cartItem = cartRepository.findById(cartItemId).orElseThrow(
+                () -> new InvalidIdException("Invalid cart item id: " + cartItemId + ".")
+        );
+
+        if (!cartItem.getUserId().equals(userId)) {
+            throw new InvalidOperationException("User doesn't have this item in their cart.");
+        }
+
+        cartRepository.deleteById(cartItemId);
+        return cartItem;
     }
 }

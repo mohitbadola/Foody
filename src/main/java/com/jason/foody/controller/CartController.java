@@ -2,6 +2,7 @@ package com.jason.foody.controller;
 
 import com.jason.foody.entity.CartItem;
 import com.jason.foody.exception.InvalidIdException;
+import com.jason.foody.exception.InvalidOperationException;
 import com.jason.foody.service.CartService;
 import com.jason.foody.service.FoodItemService;
 import jakarta.validation.Valid;
@@ -30,5 +31,9 @@ public class CartController {
     public ResponseEntity<List<CartItem>> getCartItem(@PathVariable UUID userId){
         return ResponseEntity.status(HttpStatus.OK).body(cartService.fetchUserCartItems(userId));
     }
-    
+
+    @DeleteMapping("/remove/{userId}/{cartItemId}")
+    public ResponseEntity<CartItem> removeCartItem(@PathVariable UUID userId,@PathVariable Long cartItemId) throws InvalidOperationException, InvalidIdException {
+        return ResponseEntity.status(HttpStatus.OK).body(cartService.removeCartItem(cartItemId, userId));
+    }
 }
