@@ -36,4 +36,10 @@ public class CartController {
     public ResponseEntity<CartItem> removeCartItem(@PathVariable UUID userId,@PathVariable Long cartItemId) throws InvalidOperationException, InvalidIdException {
         return ResponseEntity.status(HttpStatus.OK).body(cartService.removeCartItem(cartItemId, userId));
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<CartItem> updateCartItem(@RequestBody @Valid CartItem cartItem) throws InvalidIdException, InvalidOperationException {
+        return ResponseEntity.status(HttpStatus.OK).body(cartService.updateCartItem(cartItem));
+    }
+
 }

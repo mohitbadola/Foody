@@ -39,6 +39,23 @@ public class CartService {
         return cartRepository.save(cartItem);
     }
 
+    public CartItem updateCartItem(CartItem cartItem) throws InvalidIdException, InvalidOperationException {
+        CartItem item = cartRepository.findById(cartItem.getId()).orElseThrow(
+                () -> new InvalidIdException("Invalid cart Item id: " + cartItem.getId() + ".")
+        );
+
+        if (!cartItem.getUserId().equals(item.getUserId()) || !cartItem.getItemId().equals(item.getItemId())) {
+            throw new InvalidIdException("Invalid user or item id");
+        }
+
+        if (item.getQuantity() == cartItem.getQuantity()) {
+            throw new InvalidOperationException("Can't update as item quantity is already " + item.getQuantity());
+        }
+
+        item.setQuantity(cartItem.getQuantity());
+        return cartRepository.save(item);
+    }
+
     public List<CartItem> fetchUserCartItems(UUID userId) {
         return cartRepository.findByUserId(userId);
     }
