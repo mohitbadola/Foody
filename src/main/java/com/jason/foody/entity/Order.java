@@ -19,6 +19,11 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -49,5 +54,13 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
