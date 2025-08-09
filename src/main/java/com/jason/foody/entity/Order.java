@@ -16,7 +16,7 @@ public class Order {
 
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @ManyToOne
