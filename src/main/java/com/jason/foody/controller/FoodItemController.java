@@ -21,7 +21,7 @@ public class FoodItemController {
     FoodItemService foodItemService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<UUID> addFoodItem(@Valid @RequestBody FoodItem foodItem){
         UUID id = foodItemService.save(foodItem);
         return new ResponseEntity<>(id,HttpStatus.CREATED);
