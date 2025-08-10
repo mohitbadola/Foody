@@ -9,6 +9,8 @@ import com.jason.foody.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -24,12 +26,10 @@ public class OrderService {
     }
 
     public Order placeOrder(Order order) throws InvalidIdException {
-
         Member member = memberService.getMemberById(order.getMember().getId());
+        double amount = 0.0;
 
-        Double amount = 0.0;
-
-        for(OrderItem orderItem : order.getOrderItems()){
+        for(OrderItem orderItem : order.getOrderItems()) {
             FoodItem item = foodItemService.getFoodItemById(orderItem.getFoodItem().getId());
             amount += item.getPrice() * orderItem.getQuantity();
             orderItem.setName(item.getName());
@@ -38,6 +38,10 @@ public class OrderService {
 
         order.setAmount(amount);
         order.setCreatedAt(LocalDateTime.now());
-       return orderRepository.save(order);
+        return orderRepository.save(order);
+    }
+
+    public List<Order> findByMemberId(UUID memberId) {
+        return orderRepository.findOrdersByMemberId(memberId);
     }
 }
