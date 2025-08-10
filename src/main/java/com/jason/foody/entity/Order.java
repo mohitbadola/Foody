@@ -1,5 +1,7 @@
 package com.jason.foody.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -17,12 +19,13 @@ public class Order {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
-
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
@@ -30,6 +33,7 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+        this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
     }
 
     public LocalDateTime getCreatedAt() {
