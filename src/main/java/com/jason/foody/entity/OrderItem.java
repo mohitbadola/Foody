@@ -1,9 +1,11 @@
 package com.jason.foody.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 public class OrderItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,9 +18,10 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "food_item_id")
     private FoodItem foodItem;
 
