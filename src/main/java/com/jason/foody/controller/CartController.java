@@ -1,10 +1,12 @@
 package com.jason.foody.controller;
 
 import com.jason.foody.entity.CartItem;
+import com.jason.foody.entity.Order;
 import com.jason.foody.exception.InvalidIdException;
 import com.jason.foody.exception.InvalidOperationException;
 import com.jason.foody.service.CartService;
 import com.jason.foody.service.FoodItemService;
+import com.jason.foody.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,11 @@ public class CartController {
     @PostMapping("/update")
     public ResponseEntity<CartItem> updateCartItem(@RequestBody @Valid CartItem cartItem) throws InvalidIdException, InvalidOperationException {
         return ResponseEntity.status(HttpStatus.OK).body(cartService.updateCartItem(cartItem));
+    }
+
+    @PostMapping("/checkout/{userId}")
+    public ResponseEntity<Order> checkout(@PathVariable UUID userId) throws InvalidOperationException, InvalidIdException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.checkout(userId));
     }
 
 }
